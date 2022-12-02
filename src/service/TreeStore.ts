@@ -7,6 +7,8 @@ export class TreeStore implements TreeStoreI {
 
     constructor(items: ItemI[]) {
         this.items = items;
+        const treeItemsById = {};
+        const treeGroupItemsByParentId = {};
         if (this.items?.length) {
             for (let i = 0; i < this.items.length; i++) {
                 const item = this.items[i];
@@ -58,11 +60,13 @@ export class TreeStore implements TreeStoreI {
                 const stackAllParents = [parent];
                 result.push(parent);
                 while (stackAllParents.length > 0) {
-                    const item = stackAllParents.pop();
-                    const parent = this.getItem(item.parent);
-                    if (parent) {
-                        result.push(parent);
-                        stackAllParents.push(parent);
+                    // родительский элемент, который уже в результате
+                    const previousParent = stackAllParents.pop();
+                    // следующий родительский элемент
+                    const nextParent = this.getItem(previousParent.parent);
+                    if (nextParent) {
+                        result.push(nextParent);
+                        stackAllParents.push(nextParent);
                     }
                 }
             }
