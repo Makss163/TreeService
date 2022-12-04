@@ -7,8 +7,6 @@ export class TreeStore implements TreeStoreI {
 
     constructor(items: ItemI[]) {
         this.items = items;
-        const treeItemsById = {};
-        const treeGroupItemsByParentId = {};
         if (this.items?.length) {
             for (let i = 0; i < this.items.length; i++) {
                 const item = this.items[i];
@@ -22,35 +20,40 @@ export class TreeStore implements TreeStoreI {
         }
     }
 
+    /** Получить исходный список элементов */
     public getAll() {
         return this.items;
     }
 
+    /** Получить элемент по его идентификатору */
     public getItem(itemId: number | string) {
         return this.treeItemsById[itemId];
     }
 
+    /** Получить элементы, являющиеся дочерними для указанного */
     public getChildren(parentId: number | string) {
         return this.treeGroupItemsByParentId[parentId] ?? [];
     }
 
+    /** Получить цепочку дочерних эелментов, начиная от указанного */
     public getAllChildren(parentId: number | string) {
         const childrensFirstLevel = this.getChildren(parentId);
         const stackAllChildrens = [...childrensFirstLevel];
         const result: ItemI[] = [];
 
         while (stackAllChildrens.length > 0) {
-            const item = stackAllChildrens.pop();
+            const item = stackAllChildrens.shift();
             if (item) {
                 result.push(item);
-                const childrensLowLevel = this.getChildren(item.id);
-                stackAllChildrens.push(...childrensLowLevel);
+                const childrensNextLevel = this.getChildren(item.id);
+                stackAllChildrens.push(...childrensNextLevel);
             }
         }
 
         return result;
     }
 
+    /** Получить цепочку родительских элементов, начиная от указанного */
     public getAllParents(itemId: number | string) {
         const item = this.getItem(itemId);
         const result: ItemI[] = [];

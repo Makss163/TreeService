@@ -14,7 +14,7 @@ const items: ItemI[] = [
     { id: 8, parent: 4, type: null },
 ];
 
-const ts = new TreeStore(items);
-
-console.log(ts.getAllParents(7));
+const treeStore = new TreeStore(items);
+export default treeStore;
+console.log(treeStore.getAllParents(7));
 
