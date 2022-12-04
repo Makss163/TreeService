@@ -1,12 +1,12 @@
-import { ItemI, TreeStoreI } from "../src/interface/TestWorkI";
+import { Tree } from "../src/interface/Tree";
 import { TreeStore } from "../src/service/TreeStore";
 
 describe('TreeStore', () => {
 
     /** Исходный массив объектов */
-    let listItems: ItemI[];
+    let listItems: Tree.ItemI[];
     /** Экземпляр класса */
-    let treeStore: TreeStoreI;
+    let treeStore: Tree.TreeStoreI;
 
     /** Перед каждым тестом перезаписываем ссылку на новый исходный список объектов */
     beforeEach(() => {
@@ -21,7 +21,6 @@ describe('TreeStore', () => {
 
             { id: 7, parent: 4, type: null },
             { id: 8, parent: 4, type: null },
-            { id: 9, parent: 5, type: null },
         ];
         treeStore = new TreeStore(listItems);
     });
@@ -61,7 +60,6 @@ describe('TreeStore', () => {
             { id: 6, parent: 2, type: 'test' },
             { id: 7, parent: 4, type: null },
             { id: 8, parent: 4, type: null },
-            { id: 9, parent: 5, type: null },
         ];
         expect(actualResult).toEqual(expectedResult);
     })
