@@ -46,11 +46,7 @@ export class TreeStore implements Tree.TreeStoreI {
         }
     }
 
-    /** 
-     * Создать связи элемента и цепи родительских узлов
-     * @param itemId - идентификатор элемента, для которого создаются связи
-     * @param firstParentId - идентификатор первого непосредственного родительского узла элемента
-     * */
+    /** Создать связи элемента и цепи родительских узлов */
     public bindAllParentsWithItem(itemId: number, firstParentId: number | string) {
         const firstParent: Tree.ItemI = this.getItem(firstParentId);
         if (firstParent) this.queueParents.addInQueue(firstParent);
@@ -63,9 +59,7 @@ export class TreeStore implements Tree.TreeStoreI {
         }
     }
 
-    /** Создать связи элемента и цепи всех вложенных дочерних узлов
-     * @param itemId - идентификатор элемента, для которого создаются связи
-     */
+    /** Создать связи элемента и цепи всех вложенных дочерних узлов */
     public bindAllChildrensWithItem(itemId: number) {
         const childrensFirstLevel = this.getChildren(itemId);
         this.queueChildrens.addInQueue(childrensFirstLevel);
